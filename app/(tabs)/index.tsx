@@ -1,10 +1,45 @@
 import Header from "@/components/Header";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Pressable , View , Text} from "react-native";
+import {ChevronDoubleRightIcon} from "react-native-heroicons/outline"
+
+interface TripOtpionProps {
+  pageNavigation : string;
+  handleNavigatrionChange: (type: string) => void;
+}
+const TripOption: React.FC<TripOtpionProps> = ({
+  pageNavigation,
+  handleNavigatrionChange
+}) => (
+  <View className="flex-row justify-between w-full px-4 py-2">
+    <Pressable
+     className="flex-row w-1/2"
+     onPress={()=> handleNavigatrionChange(pageNavigation)}
+    >
+      <View className={`w-full justify-center items-center flex-row space-x-2 pb-2
+        ${pageNavigation === "One Way" ? "border-b-4 border-[#12B3A8]" : "border-transparent"}
+        `}>
+        <ChevronDoubleRightIcon className="w-6 h-6" size={20} strokeWidth={
+           pageNavigation === "oneWay" ? 3 : 2
+        }
+        color={
+          pageNavigation === "oneWay" ? "#12B3A8" : "gray"
+        }
+        />
+        <Text  className={`text-xl pl-2 ${
+          pageNavigation === "oneWay" ? "text-[12B3a8]" : "text-gray-500"
+        }`}
+        >One Way</Text>
+      </View>
+    </Pressable>
+  </View>
+)
 
 export default function HomeScreen() {
   const [isPending, setIsPending] = useState(false)
+
+  
   return(
     <View className="flex-1 items-center bg-[#F5F7FA] relative">
       <StatusBar style="light"/>
@@ -28,6 +63,17 @@ export default function HomeScreen() {
 
       <Header/>
         
+      </View>
+
+      <View className="w-full px-4 -mt-32 mx-4">
+        <View className="bg-white rounded-3xl pt-2 pb-4 shadow-md shadow-slate-300">
+          
+            <View className="flex-row justify-between w-full px-4 py-2">
+              <TripOption pageNavigation="one-way" handleNavigatrionChange={(type)=> console.log(type)}/>
+
+            </View>
+         
+        </View>
       </View>
     </View>
   )
