@@ -30,6 +30,9 @@ const TripOption: React.FC<TripOtpionProps> = ({
         <Text  className={`text-xl pl-2 ${
           pageNavigation === "oneWay" ? "text-[12B3a8]" : "text-gray-500"
         }`}
+        style={{
+          fontWeight: pageNavigation === "oneWay" ? "bold" : "normal"
+        }}
         >One Way</Text>
       </View>
     </Pressable>
