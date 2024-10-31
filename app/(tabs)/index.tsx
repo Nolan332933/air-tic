@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { ActivityIndicator, Pressable, View, Text } from "react-native";
-import { ChevronDoubleRightIcon } from "react-native-heroicons/outline";
+import { ArrowPathRoundedSquareIcon, ChevronDoubleRightIcon } from "react-native-heroicons/outline";
 
 interface TripOptionProps {
   pageNavigation: string;
@@ -41,6 +41,34 @@ const TripOption: React.FC<TripOptionProps> = ({
         </Text>
       </View>
     </Pressable>
+
+    <Pressable
+      className="flex-row w-1/2"
+      onPress={() => handleNavigationChange("roundedTrip")}
+    >
+      <View
+        className={`w-full justify-center items-center flex-row space-x-2 pb-2 ${
+          pageNavigation === "roundedTrip" ? "border-b-4 border-[#12B3A8]" : "border-transparent"
+        }`}
+      >
+        <ArrowPathRoundedSquareIcon
+          
+          size={20}
+          strokeWidth={pageNavigation === "roundedTrip" ? 3 : 2}
+          color={pageNavigation === "roundedTrip" ? "#12B3A8" : "gray"}
+        />
+        <Text
+          className={`text-xl pl-2 ${
+            pageNavigation === "roundedTrip" ? "text-[#12B3A8]" : "text-gray-500"
+          }`}
+          style={{
+            fontWeight: pageNavigation === "roundedTrip" ? "700" : "500",
+          }}
+        >
+          Round Trip
+        </Text>
+      </View>
+    </Pressable>
   </View>
 );
 
@@ -48,6 +76,7 @@ export default function HomeScreen() {
   const [isPending, setIsPending] = useState(false);
   const [pageNavigation, setPageNavigation] = useState("oneWay");
 
+  const handleNavigationChange = (type: string) => setPageNavigation(type);
   return (
     <View className="flex-1 items-center bg-[#F5F7FA] relative">
       <StatusBar style="light" />
