@@ -137,10 +137,11 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
 }) => {
   return (
     <Pressable className="flex-row justify-between w-full px-4 py-2" onPress={onPress}>
-    <View className="border-2 border-gray-300 mx-4 mb-4 rounded-2xl justify-center">
-      <Pressable onPress={onPress}>
+    
+      <View className="border-2 border-gray-300 mx-4 mb-4 rounded-2xl justify-center py-3 flex-row items-center pl-4" >
+      <View className="w-[15%] border-r-2 border-gray-300">{icon}</View>
         <View className="px-4 flex-row justify-between items-center">
-          <View className="w-[15%] border-r-2 border-gray-300">{icon}</View>
+          
           <View className="w-[80%] py-3">
             {value ? (
               <Text className="bg-transparent text-gray-600 font-bold">{value}</Text>
@@ -151,8 +152,8 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
             )}
           </View>
         </View>
-      </Pressable>
-    </View>
+      </View>
+    
     </Pressable>
   );
 };
