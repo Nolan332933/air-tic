@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { ActivityIndicator, Pressable, View, Text } from "react-native";
+import { ActivityIndicator, Pressable, View, Text, TextInput } from "react-native";
 import { ArrowPathRoundedSquareIcon, ChevronDoubleRightIcon } from "react-native-heroicons/outline";
 
 interface SearchFlightData {
@@ -136,20 +136,14 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
   onPress,
 }) => {
   return (
-    <Pressable className="flex-row justify-between w-full px-4 py-2" onPress={onPress}>
+    <Pressable className="flex-row w-full px-4 py-2" onPress={onPress}>
     
-      <View className="border-2 border-gray-300 mx-4 mb-4 rounded-2xl justify-center py-3 flex-row items-center pl-4" >
+      <View className="border-2 border-gray-300 mx-4 mb-4 rounded-2xl justify-center py-4 flex-row items-center pl-4" >
       <View className="w-[15%] border-r-2 border-gray-300">{icon}</View>
         <View className="px-4 flex-row justify-between items-center">
           
-          <View className="w-[80%] py-3">
-            {value ? (
-              <Text className="bg-transparent text-gray-600 font-bold">{value}</Text>
-            ) : (
-              <Text className="bg-transparent text-lg text-gray-600 font-semibold">
-                {placeholder}
-              </Text>
-            )}
+          <View className="w-[80%] ">
+            <Text className="bg-transparent text-gray-600 font-bold">{value || placeholder}</Text>
           </View>
         </View>
       </View>
@@ -168,6 +162,7 @@ export default function HomeScreen() {
     departureDate: "",
     seat: 0,
   })
+  const [selectedDate, setSelectedDate] = useState<any>(new Date());
 
   const handleNavigationChange = (type: string) => setPageNavigation(type);
   return (
@@ -220,14 +215,36 @@ export default function HomeScreen() {
 
           <DepartureDate
              placeholder={
-              searchFlightData.departureDate ?
-               searchFlightData.departureDate
-               : "Departure Date"
+              selectedDate && selectedDate.length > 0 
+                ? selectedDate.replace(/^"|"$/g, "")
+                : "Departure Date"
              }
              icon={<FontAwesome5 size={20} color="gray" name="calendar-alt"/>}
-             value={searchFlightData.departureDate}
+             value={searchFlightData.departureDate.replace(/^"|"$/g, "")}
              onPress={()=> {}}
           />
+
+          <View className=" w-full px-4 py-2 ">
+            <View className=" border-2 border-gray-300 mx-4 mb-4 rounded-2xl justify-center py-4 flex-row items-center pl-4">
+                <View>
+                  <MaterialCommunityIcons size={20} color="gray" name="seat-passenger" />
+                </View>
+
+                <TextInput
+                  className="w-[85%] text-base px-2 text-gray-600 font-semibold"
+                  placeholder="Seat"
+                  keyboardType="numeric"
+                  value={searchFlightData.seat.toString()}
+                  onChangeText={(text)=> 
+                    setSearchFlightData({
+                      ...searchFlightData,
+                      seat: parseInt(text)
+                    })
+                  }
+                />
+            </View>
+          </View>
+         
 
         </View>
       </View>
